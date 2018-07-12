@@ -9,6 +9,12 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintStream;
+import java.sql.*;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -16,6 +22,7 @@ import java.io.PrintStream;
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    private static MainFrame mainFrame_instance;
     /**
      * Creates new form MainFrame
      */
@@ -24,6 +31,11 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
     }
 
+    public static MainFrame getMainFrame(){
+        if(mainFrame_instance==null)
+            mainFrame_instance=new MainFrame();
+        return mainFrame_instance;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,16 +52,16 @@ public class MainFrame extends javax.swing.JFrame {
         jPanelView = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabelId = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabelSuccessOrFail = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        jLabelRuntime = new javax.swing.JLabel();
         jPanelControl = new javax.swing.JPanel();
         jButtonStart = new javax.swing.JButton();
         jButtonStop = new javax.swing.JButton();
@@ -133,14 +145,14 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("宋体", 0, 24)); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("等线", 0, 18)); // NOI18N
-        jLabel3.setText("106");
+        jLabelId.setFont(new java.awt.Font("等线", 0, 18)); // NOI18N
+        jLabelId.setText("无");
 
         jLabel4.setFont(new java.awt.Font("等线", 0, 18)); // NOI18N
         jLabel4.setText("检测结果：");
 
-        jLabel5.setFont(new java.awt.Font("等线", 0, 18)); // NOI18N
-        jLabel5.setText("合格");
+        jLabelSuccessOrFail.setFont(new java.awt.Font("等线", 0, 18)); // NOI18N
+        jLabelSuccessOrFail.setText("无");
 
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("上料");
@@ -159,11 +171,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel6.setText("当前运行速度：");
 
-        jLabel7.setText("运行时长：");
+        jLabel7.setText("连续运行时长：");
 
-        jLabel12.setText("15件/min");
+        jLabel12.setText("null");
 
-        jLabel13.setText("300min");
+        jLabelRuntime.setText("null");
 
         javax.swing.GroupLayout jPanelViewLayout = new javax.swing.GroupLayout(jPanelView);
         jPanelView.setLayout(jPanelViewLayout);
@@ -178,7 +190,7 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
+                            .addComponent(jLabelRuntime)
                             .addComponent(jLabel12))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,8 +206,8 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabelSuccessOrFail)
+                            .addComponent(jLabelId))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -206,12 +218,12 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(jLabelId)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabelSuccessOrFail))
                 .addGap(26, 26, 26)
                 .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButton1)
@@ -221,7 +233,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButton2)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel13))
+                    .addComponent(jLabelRuntime))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jRadioButton3)
                 .addContainerGap(17, Short.MAX_VALUE))
@@ -333,6 +345,11 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu1.setText("文件");
 
         jMenuItem2.setText("初始化");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("退出");
@@ -360,6 +377,11 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu3.setText("工具");
 
         jMenuItem5.setText("锁定");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem5);
 
         jMenuItem6.setText("选项");
@@ -370,9 +392,19 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu4.setText("帮助");
 
         jMenuItem7.setText("帮助文档");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem7);
 
         jMenuItem8.setText("关于");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem8);
 
         jMenuBar1.add(jMenu4);
@@ -416,14 +448,17 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButtonStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStopActionPerformed
         // TODO add your handling code here:
         System.out.println(evt.getActionCommand());
-        jTextAreaLog.append("设备已停止运行...\r\n");
+        jDialog1.dispose();
+        Log.logout("设备已停止运行...");
+        TimeCount.getTimeCount().stopCount();
     }//GEN-LAST:event_jButtonStopActionPerformed
 
     private void jButtonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStartActionPerformed
         // TODO add your handling code here:
         System.out.println(evt.getActionCommand());
         jDialog1.setVisible(true);
-        jTextAreaLog.append("设备已启动...\r\n");
+        Log.logout("设备已启动...");
+        TimeCount.getTimeCount().beginCount();
     }//GEN-LAST:event_jButtonStartActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
@@ -432,8 +467,12 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        IRRecord rec=new IRRecord(true);
-        jTextAreaLog.append(rec.toString()+"\r\n");
+        PanelData panelData=new PanelData(true,IdManager.getIdManager().getId());
+        System.out.println(panelData.toString());
+        Log.logout(panelData.toString());
+        panelData.insertToDB();
+        //panelData.check();
+        panelData.display();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -447,19 +486,69 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        IRRecord rec=new IRRecord(false);
-        jTextAreaLog.append(rec.toString()+"\r\n");
+        PanelData panelData=new PanelData(false,IdManager.getIdManager().getId());
+        System.out.println(panelData.toString());
+        Log.logout(panelData.toString());
+        panelData.insertToDB();
+        //panelData.check();
+        panelData.display();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        TimeCount timecount=new TimeCount();
+        timecount.start();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+//        try{
+//            log("start!"); 
+//            Connection conn=DriverManager.getConnection("jdbc:derby:C:\\TestDB;create=true");
+//            log("connect!"); 
+//            Statement statement=conn.createStatement();
+//            log("statement!"); 
+//            DatabaseMetaData dbm=conn.getMetaData();
+//            ResultSet judge_Table=dbm.getTables(null,null,"SUM_TABLE",null);
+//            if(!(judge_Table.next())){
+//                statement.execute("CREATE TABLE sum_table(date varchar(20),sum_success int,sun_fail int)");
+//                log("create!"); 
+//            }else{
+//                log("exist!"); 
+//            }
+//
+//            statement.execute("insert into sum_table values('2017-7-9',18,2)");
+//            log("insert!"); 
+//            ResultSet rs=statement.executeQuery("select sum_success from sum_table where date='2017-7-9'");
+//            log("query!"); 
+//            while(rs.next()){
+//            int n=rs.getInt("sum_success");
+//            log(String.valueOf(n));
+//            }
+//            log("success!"); 
+//        }catch(SQLException e){
+//           log("fail!"); 
+//        }
+//                
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) {     
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+        */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -481,25 +570,58 @@ public class MainFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainFrame().setVisible(true);
+                MainFrame.getMainFrame().setVisible(true);
             }
         });
-        
-//    PipedInputStream pipedIS = new PipedInputStream();
-//    PipedOutputStream pipedOS = new PipedOutputStream();
-//    try {
-//       pipedOS.connect(pipedIS);
+        //</editor-fold>       
+    }
+    
+//    public class TimeCount extends Thread{
+//
+//        private static Object getTimeCount() {
+//            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        }
+//        private Thread thread;
+//        public void run(){
+//            System.out.println("run!");
+//            jLabel13.setText("Let's start!");
+//            for(int i=0;;i++){
+//                try {
+//                    sleep(6000);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                jLabel13.setText(String.valueOf(i));
+//            }           
+//        }
+//        
+//        
+//        public void start(){
+//            System.out.println("try!");
+//            if (thread == null) {
+//                thread = new Thread (this);
+//                thread.start ();
+//            }
+//        }
 //    }
-//    catch(IOException e) {
-//       System.err.println("连接失败");
-//       System.exit(1);
-//    }
-//    PrintStream ps = new PrintStream(pipedOS);
-//    System.setOut(ps);
-//    System.setErr(ps);       
-        
+    
+    //用于输出到GUI界面的方法
+    
+    public JLabel getTimeLabel(){
+        return jLabelRuntime;
     }
 
+    public JLabel getIdLabel(){
+        return jLabelId;
+    }
+    
+    public JLabel getSuccessOrFailLabel(){
+        return jLabelSuccessOrFail;
+    }
+    
+    public JTextArea getTextArea(){
+        return jTextAreaLog;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -510,16 +632,16 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelId;
+    private javax.swing.JLabel jLabelRuntime;
+    private javax.swing.JLabel jLabelSuccessOrFail;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
