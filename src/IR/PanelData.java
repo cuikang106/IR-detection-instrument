@@ -15,10 +15,10 @@ import java.util.Date;
  * @author Cui Kang
  */
 public class PanelData {
-    private Boolean success_fail;
-    private String date;
-    private String time;
-    private int id;
+    private final Boolean success_fail;
+    private final String date;
+    private final String time;
+    private final int id;
 
     public PanelData(Boolean success_fail, int id) {
         this.success_fail = success_fail;

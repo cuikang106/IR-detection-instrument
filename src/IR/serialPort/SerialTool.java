@@ -106,7 +106,7 @@ public class SerialTool {
                 
                 try {                        
                     //设置一下串口的波特率等参数
-                    serialPort.setSerialPortParams(baudrate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);                              
+                    serialPort.setSerialPortParams(baudrate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
                 } catch (UnsupportedCommOperationException e) {  
                     throw new SerialPortParameterFailure();
                 }

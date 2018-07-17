@@ -5,6 +5,7 @@
  */
 package IR;
 
+import IR.serialPort.DataView;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
@@ -496,8 +497,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        TimeCount timecount=new TimeCount();
-        timecount.start();
+        new DataView().setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -506,34 +506,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
-//        try{
-//            log("start!"); 
-//            Connection conn=DriverManager.getConnection("jdbc:derby:C:\\TestDB;create=true");
-//            log("connect!"); 
-//            Statement statement=conn.createStatement();
-//            log("statement!"); 
-//            DatabaseMetaData dbm=conn.getMetaData();
-//            ResultSet judge_Table=dbm.getTables(null,null,"SUM_TABLE",null);
-//            if(!(judge_Table.next())){
-//                statement.execute("CREATE TABLE sum_table(date varchar(20),sum_success int,sun_fail int)");
-//                log("create!"); 
-//            }else{
-//                log("exist!"); 
-//            }
-//
-//            statement.execute("insert into sum_table values('2017-7-9',18,2)");
-//            log("insert!"); 
-//            ResultSet rs=statement.executeQuery("select sum_success from sum_table where date='2017-7-9'");
-//            log("query!"); 
-//            while(rs.next()){
-//            int n=rs.getInt("sum_success");
-//            log(String.valueOf(n));
-//            }
-//            log("success!"); 
-//        }catch(SQLException e){
-//           log("fail!"); 
-//        }
-//                
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed

@@ -17,7 +17,7 @@ public class TimeCount extends Thread{
     private static TimeCount timeCount_instance;
     private Thread thread;
     private volatile boolean exit = false;
-    private JLabel timeLabel=MainFrame.getMainFrame().getTimeLabel();
+    private final JLabel timeLabel=MainFrame.getMainFrame().getTimeLabel();
     
     public static TimeCount getTimeCount(){
         if(timeCount_instance==null)
