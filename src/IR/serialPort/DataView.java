@@ -5,6 +5,9 @@
  */
 package IR.serialPort;
 
+import IR.IdManager;
+import IR.Log;
+import IR.PanelData;
 import IR.serialException.NoSuchPort;
 import IR.serialException.NotASerialPort;
 import IR.serialException.PortInUse;
@@ -26,6 +29,8 @@ public class DataView extends javax.swing.JFrame {
     
     private ArrayList<String> commList = null;    //保存可用端口号
     private SerialPort serialPort = null;    //保存串口对象
+    private static DataView dataView;
+    
     /**
      * Creates new form DateView
      */
@@ -33,12 +38,20 @@ public class DataView extends javax.swing.JFrame {
         initComponents();
         commList=SerialTool.findPort();
     }
+    
+    public static DataView getDataView(){
+        if(dataView==null){
+            dataView=new DataView();
+        }
+        return dataView;
+    }
 
     private class SerialListener implements SerialPortEventListener{
+        @Override
         public void serialEvent(SerialPortEvent serialPortEvent){
             switch(serialPortEvent.getEventType()){
                 case SerialPortEvent.BI: // 10 通讯中断
-                    System.out.println("通讯中断");
+                    JOptionPane.showMessageDialog(null, "与串口设备通讯中断", "错误", JOptionPane.INFORMATION_MESSAGE);
                     break;
                 case SerialPortEvent.OE: // 7 溢位（溢出）错误
 
@@ -61,13 +74,13 @@ public class DataView extends javax.swing.JFrame {
                     byte[] data = null;
                     try{
                         if (serialPort==null){
-                            System.out.println("串口对象为空！监听失败！");
+                            JOptionPane.showMessageDialog(null, "串口对象为空！监听失败！", "错误", JOptionPane.INFORMATION_MESSAGE);
                         }else{
                             data=SerialTool.readFromPort(serialPort);
                             
                             //自定义解析过程
                             if(data==null||data.length<1){
-                                System.out.println("未读取到有效数据");
+                                JOptionPane.showMessageDialog(null, "未读取到有效数据！", "错误", JOptionPane.INFORMATION_MESSAGE);                              
                                 System.exit(0);
                             }else{
                                 String dataOriginal=new String(data);   //将字节数组数据转换位为保存了原始数据的字符串
@@ -78,11 +91,25 @@ public class DataView extends javax.swing.JFrame {
                                     dataValid=dataOriginal.substring(1);
                                     elements = dataValid.split(" ");
                                     if (elements == null || elements.length < 1) {    //检查数据是否解析正确
-                                        System.out.println("数据解析出错");
+                                        JOptionPane.showMessageDialog(null, "数据解析出错", "错误", JOptionPane.INFORMATION_MESSAGE);
                                         System.exit(0);
                                     }else{
-                                        //使用分割得到的数据
-                                        System.out.println(elements[0]);
+                                        //使用分割得到的数据,根据预定义的字符串内容执行逻辑
+                                        if(elements[0].equals("OK")){   //检测结果为合格品
+                                            PanelData panelData=new PanelData(true,IdManager.getIdManager().getId());
+                                            System.out.println(panelData.toString());
+                                            Log.logout(panelData.toString());
+                                            panelData.insertToDB();
+                                            //panelData.check();
+                                            panelData.display();
+                                        }else if(elements[0].equals("inferior")){   //检测结果为次品
+                                            PanelData panelData=new PanelData(false,IdManager.getIdManager().getId());
+                                            System.out.println(panelData.toString());
+                                            Log.logout(panelData.toString());
+                                            panelData.insertToDB();
+                                            //panelData.check();
+                                            panelData.display();
+                                        }
                                     }
                                 }
                             }
@@ -111,8 +138,6 @@ public class DataView extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         commInput = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         showSerialButton.setText("现有串口");
         showSerialButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,13 +152,13 @@ public class DataView extends javax.swing.JFrame {
             }
         });
 
-        bpsInput.setColumns(10);
+        bpsInput.setColumns(6);
 
         jLabel1.setText("波特率");
 
         jLabel2.setText("串口名");
 
-        commInput.setColumns(10);
+        commInput.setColumns(6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -152,7 +177,7 @@ public class DataView extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(commInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(270, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,7 +194,7 @@ public class DataView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(bpsInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -211,6 +236,12 @@ public class DataView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_openSerialButtonActionPerformed
 
+    public Boolean hasSerialPort(){
+        if(this.serialPort==null){
+            return false;
+        }
+        return true;
+    }
     /**
      * @param args the command line arguments
      */
@@ -242,7 +273,9 @@ public class DataView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DataView().setVisible(true);
+                DataView v= new DataView();
+                v.setLocationRelativeTo(null);
+                v.setVisible(true);
             }
         });
     }

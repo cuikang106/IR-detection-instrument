@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Mon Jul 16 20:04:45 CST 2018:
-正在使用类加载程序 sun.misc.Launcher$AppClassLoader@6f94fa3e 引导数据库
-目录 C:\Users\njau_\Documents\NetBeansProjects\IR-detection-instrument\db\TestDB 中的 Derby 版本 The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631) 实例 a816c00e-0164-a2fa-8756-000039d2dd20
+Sat Jul 28 06:05:20 CST 2018:
+正在使用类加载程序 sun.misc.Launcher$AppClassLoader@1d44bcfa 引导数据库
+目录 C:\Users\Cui Kang\Documents\NetBeansProjects\IR detection instrument\db\TestDB 中的 Derby 版本 The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631) 实例 a816c00e-0164-ddc6-55a9-00000609ac90
 已从 file:/C:/Program%20Files/Java/jdk1.8.0_171/db/lib/derby.jar 加载
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_171-b11
-user.dir=C:\Users\njau_\Documents\NetBeansProjects\IR-detection-instrument
+user.dir=C:\Users\Cui Kang\Documents\NetBeansProjects\IR detection instrument
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
