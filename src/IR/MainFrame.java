@@ -455,12 +455,15 @@ public class MainFrame extends javax.swing.JFrame {
         Alarm.getAlarm().stopAlarm();
         DataView.closeDataView();
         SocketClient.stopSocketClient();
+        jLabelSuccessOrFail.setText("无");
+        jLabelId.setText("无");
     }//GEN-LAST:event_jButtonStopActionPerformed
 
     private void jButtonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStartActionPerformed
         // TODO add your handling code here:
         if(connectMode == 1){
             DataView.getDataView().showframe();
+            Log.logout("设备已启动...");
             TimeCount.getTimeCount().beginCount();
         }
 
@@ -519,6 +522,23 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
+        if(java.awt.Desktop.isDesktopSupported()){
+            try{
+                //创建一个URI实例,注意不是URL
+                java.net.URI uri=java.net.URI.create("Documentation.html");
+                //获取当前系统桌面扩展
+                java.awt.Desktop dp=java.awt.Desktop.getDesktop();
+                //判断系统桌面是否支持要执行的功能
+                if(dp.isSupported(java.awt.Desktop.Action.BROWSE)){
+                    //获取系统默认浏览器打开链接
+                    dp.browse(uri);
+                }
+            }catch(java.lang.NullPointerException e){
+                //此为uri为空时抛出异常
+            }catch(java.io.IOException e){
+                //此为无法获取系统默认浏览器
+            }
+        }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed

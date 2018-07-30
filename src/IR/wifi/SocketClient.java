@@ -100,12 +100,8 @@ public class SocketClient implements Runnable{
     
     public static void stopSocketClient(){
         if(socketclient!=null){
+            socketclient.sendmessage("stop");
             socketclient.stopMe=false;
-            try {
-                socketclient.socket.close();
-            } catch (IOException ex) {
-                Logger.getLogger(SocketClient.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
     

@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -71,7 +72,7 @@ public class CombinedCategoryPlot extends JFrame{
                         range=sum_fail;
                     defaultcategorydataset1.addValue(sum_success, "success", resultset.getString("date"));
                     defaultcategorydataset1.addValue(sum_fail, "fail", resultset.getString("date"));
-                    defaultcategorydataset2.addValue((double)sum_success/(sum_success+sum_fail), "rate", resultset.getString("date"));
+                    defaultcategorydataset2.addValue(((double)sum_success/(sum_success+sum_fail)), "rate", resultset.getString("date"));
                     sum++; 
                 }
             }catch (ClassNotFoundException e) {
@@ -91,8 +92,10 @@ public class CombinedCategoryPlot extends JFrame{
             super(new BorderLayout());
             createDataset();
             dataset1 = new SlidingCategoryDataset(defaultcategorydataset1, sum-10, sum);
+            dataset1.setMaximumCategoryCount(10);
             dataset2 = new SlidingCategoryDataset(defaultcategorydataset2, sum-10, sum);
-            
+            dataset2.setMaximumCategoryCount(10);
+                    
             NumberAxis rangeAxis1 = new NumberAxis("件数");
             rangeAxis1.setRange(0, range);
             rangeAxis1.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
@@ -102,6 +105,8 @@ public class CombinedCategoryPlot extends JFrame{
             subplot1.setDomainGridlinesVisible(true);
             
             NumberAxis rangeAxis2 = new NumberAxis("合格率");
+            DecimalFormat df = new DecimalFormat("0.00%"); 
+            rangeAxis2.setNumberFormatOverride(df);
             rangeAxis2.setRange(0, 1);
             rangeAxis2.setStandardTickUnits(NumberAxis.createStandardTickUnits());
             LineAndShapeRenderer renderer2 = new LineAndShapeRenderer();
