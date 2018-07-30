@@ -98,20 +98,22 @@ public class SocketClient implements Runnable{
         thread.start();
     }
     
-    public void stopSocketClient(){
-        stopMe=false;
-        try {
-            socket.close();
-        } catch (IOException ex) {
-            Logger.getLogger(SocketClient.class.getName()).log(Level.SEVERE, null, ex);
+    public static void stopSocketClient(){
+        if(socketclient!=null){
+            socketclient.stopMe=false;
+            try {
+                socketclient.socket.close();
+            } catch (IOException ex) {
+                Logger.getLogger(SocketClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
-    public static SocketClient createSocketClient(String host ,int port){
+    public static SocketClient getSocketClient(String host ,int port){
         if(socketclient==null)
             socketclient = new SocketClient(host, port);
         return socketclient;
-    }
+    } 
     
     public void setup(){
         stopMe=true;

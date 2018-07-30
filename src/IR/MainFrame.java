@@ -25,6 +25,7 @@ import javax.swing.JTextArea;
  * @author Cui Kang
  */
 public class MainFrame extends javax.swing.JFrame {
+    private static int connectMode = 0;
 
     private static MainFrame mainFrame_instance;
     /**
@@ -64,7 +65,7 @@ public class MainFrame extends javax.swing.JFrame {
         jRadioButton3 = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        jLabelSpeed = new javax.swing.JLabel();
         jLabelRuntime = new javax.swing.JLabel();
         jPanelControl = new javax.swing.JPanel();
         jButtonStart = new javax.swing.JButton();
@@ -175,7 +176,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel7.setText("连续运行时长：");
 
-        jLabel12.setText("null");
+        jLabelSpeed.setText("null");
 
         jLabelRuntime.setText("null");
 
@@ -193,7 +194,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelRuntime)
-                            .addComponent(jLabel12))
+                            .addComponent(jLabelSpeed))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jRadioButton3)
@@ -230,7 +231,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButton1)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel12))
+                    .addComponent(jLabelSpeed))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButton2)
@@ -376,9 +377,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("工具");
+        jMenu3.setText("设置");
 
-        jMenuItem5.setText("锁定");
+        jMenuItem5.setText("通信模式");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem5ActionPerformed(evt);
@@ -449,25 +450,27 @@ public class MainFrame extends javax.swing.JFrame {
         System.out.println(evt.getActionCommand());
         //jDialog1.dispose();
         Log.logout("设备已停止运行...");
-        TimeCount.getTimeCount().stopCount();
+        TimeCount.getTimeCount().stopCounting();
+        SpeedManager.getSpeedManager().stopCounting();
+        Alarm.getAlarm().stopAlarm();
+        DataView.closeDataView();
+        SocketClient.stopSocketClient();
     }//GEN-LAST:event_jButtonStopActionPerformed
 
     private void jButtonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStartActionPerformed
         // TODO add your handling code here:
-//        if(DataView.getDataView().hasSerialPort()){
-//            System.out.println(evt.getActionCommand());
-//            jDialog1.setVisible(true);
-//            Log.logout("设备已启动...");
-//            TimeCount.getTimeCount().beginCount();
-//        }else{
-//            JOptionPane.showMessageDialog(null, "未连接串口！", "错误", JOptionPane.INFORMATION_MESSAGE);
-//        }
+        if(connectMode == 1){
+            DataView.getDataView().showframe();
+            TimeCount.getTimeCount().beginCount();
+        }
 
-        SocketClient socketclient = SocketClient.createSocketClient("127.0.0.1",21);
-        socketclient.setup();
-        socketclient.sendmessage("start");
-        Log.logout("设备已启动...");
-        TimeCount.getTimeCount().beginCount();
+        if(connectMode == 0){
+            SocketClient socketclient = SocketClient.getSocketClient("127.0.0.1",21);
+            socketclient.setup();
+            socketclient.sendmessage("start");
+            Log.logout("设备已启动...");
+            TimeCount.getTimeCount().beginCount();
+        }
     }//GEN-LAST:event_jButtonStartActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
@@ -506,11 +509,12 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        DataView.getDataView().setVisible(true);
+        DataView.getDataView().showframe();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
+        SelectMode.onCall();
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
@@ -605,6 +609,14 @@ public class MainFrame extends javax.swing.JFrame {
     public JTextArea getTextArea(){
         return jTextAreaLog;
     }
+    
+    public JLabel getSpeedLabel(){
+        return jLabelSpeed;
+    }
+    
+    public void switchMode(int n){
+        connectMode = n;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -614,7 +626,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -624,6 +635,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelId;
     private javax.swing.JLabel jLabelRuntime;
+    private javax.swing.JLabel jLabelSpeed;
     private javax.swing.JLabel jLabelSuccessOrFail;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

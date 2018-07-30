@@ -57,7 +57,7 @@ public class CombinedCategoryPlot extends JFrame{
             defaultcategorydataset2 = new DefaultCategoryDataset();
             try{
                 Class.forName("org.apache.derby.jdbc.ClientDriver");
-                Connection conn=DriverManager.getConnection("jdbc:derby:C:/Users/Cui Kang/Documents/NetBeansProjects/IR detection instrument/db/TestDB");
+                Connection conn=DriverManager.getConnection("jdbc:derby:db/TestDB");
                 System.out.println("建立连接");
                 Statement statement = conn.createStatement();
                 String sql="select * from sum_table";
@@ -90,8 +90,8 @@ public class CombinedCategoryPlot extends JFrame{
         public MyDemoPanel(){
             super(new BorderLayout());
             createDataset();
-            dataset1 = new SlidingCategoryDataset(defaultcategorydataset1, 0, 10);
-            dataset2 = new SlidingCategoryDataset(defaultcategorydataset2, 0, 10);
+            dataset1 = new SlidingCategoryDataset(defaultcategorydataset1, sum-10, sum);
+            dataset2 = new SlidingCategoryDataset(defaultcategorydataset2, sum-10, sum);
             
             NumberAxis rangeAxis1 = new NumberAxis("件数");
             rangeAxis1.setRange(0, range);
@@ -123,15 +123,14 @@ public class CombinedCategoryPlot extends JFrame{
             
             ChartPanel chartpanel = new ChartPanel(jfreechart);
             chartpanel.setPreferredSize(new Dimension(1200, 800));
-            scroller = new JScrollBar(JScrollBar.HORIZONTAL, 0, 10, 0, sum);//参数分别为:方向，初始位置，最小值，最大值(需要修改）
-            
-			add(chartpanel);
-			scroller.getModel().addChangeListener(this);
-			JPanel jpanel = new JPanel(new BorderLayout());
-			jpanel.add(scroller);
-			jpanel.setBorder(BorderFactory.createEmptyBorder(66, 2, 2, 2));
-			jpanel.setBackground(Color.white);
-			add(jpanel, "South");
+            scroller = new JScrollBar(JScrollBar.HORIZONTAL, sum-10, 10, 0, sum);//参数分别为:方向，初始位置，最小值，最大值(需要修改）
+                add(chartpanel);
+                scroller.getModel().addChangeListener(this);
+                JPanel jpanel = new JPanel(new BorderLayout());
+                jpanel.add(scroller);
+                jpanel.setBorder(BorderFactory.createEmptyBorder(66, 2, 2, 2));
+                jpanel.setBackground(Color.white);
+                add(jpanel, "South");
         }
     }
     

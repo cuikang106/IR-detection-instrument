@@ -43,9 +43,19 @@ public class DataView extends javax.swing.JFrame {
         if(dataView==null){
             dataView=new DataView();
         }
+        dataView.setLocationRelativeTo(null);
         return dataView;
     }
 
+    public void showframe(){
+        dataView.setVisible(true);
+    }
+    
+    public static void closeDataView(){
+        if(dataView!=null)
+            dataView.dispose();
+    }
+    
     private class SerialListener implements SerialPortEventListener{
         @Override
         public void serialEvent(SerialPortEvent serialPortEvent){
@@ -242,6 +252,7 @@ public class DataView extends javax.swing.JFrame {
         }
         return true;
     }
+
     /**
      * @param args the command line arguments
      */

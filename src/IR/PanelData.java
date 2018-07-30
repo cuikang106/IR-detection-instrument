@@ -19,20 +19,14 @@ public class PanelData {
     private final String date;
     private final String time;
     private final int id;
+    private final Date dt;
 
     public PanelData(Boolean success_fail, int id) {
         this.success_fail = success_fail;
         this.id = id;
-        Date dt=new Date();
+        this.dt=new Date();
         this.time=String.format("%tT", dt);
         this.date=String.format("%tF", dt);
-    }
-
-    public PanelData(Boolean success_fail, String date, String time, int id) {
-        this.success_fail = success_fail;
-        this.date = date;
-        this.time = time;
-        this.id = id;
     }
 
     @Override
@@ -82,10 +76,10 @@ public class PanelData {
             ResultSet resultSet=InitDB.getInitDB().getRs("select * from panel_table");
 
             while(resultSet.next()){
-                resultSet.getBoolean("success_fail");
-                PanelData panelDate=new PanelData(resultSet.getBoolean("success_fail"),resultSet.getString("date"),resultSet.getString("time"),resultSet.getInt("id"));
-                System.out.println(panelDate.toString());
-                Log.logout(panelDate.toString());
+//                resultSet.getBoolean("success_fail");
+//                PanelData panelDate=new PanelData(resultSet.getBoolean("success_fail"),resultSet.getString("date"),resultSet.getString("time"),resultSet.getInt("id"));
+//                System.out.println(panelDate.toString());
+//                Log.logout(panelDate.toString());
             }
             System.out.println("查询成功");
             Log.logout("查询成功");
@@ -95,10 +89,20 @@ public class PanelData {
     }
     
     public void display(){
+        SpeedManager.getSpeedManager().addData(this);//调用速度管理类计算并显示实时速度
+        Alarm.getAlarm().addData(this);
         if(success_fail){
             MainFrame.getMainFrame().getSuccessOrFailLabel().setText("合格");
         }else{
             MainFrame.getMainFrame().getSuccessOrFailLabel().setText("不合格");
         }
+    }
+    
+    public Date getDate(){
+        return dt;
+    }
+    
+    public Boolean getSuccess0rFail(){
+        return success_fail;
     }
 }

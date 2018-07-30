@@ -53,7 +53,7 @@ public class TimeCount extends Thread{
         this.start();
     }
     
-    public void stopCount(){
+    public void stopCounting(){
         this.exit=true;
         this.thread=null;
         timeLabel.setText("未开始");
