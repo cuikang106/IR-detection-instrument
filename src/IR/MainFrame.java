@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 
 /**
@@ -60,9 +61,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabelId = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabelSuccessOrFail = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabelSpeed = new javax.swing.JLabel();
@@ -71,10 +69,9 @@ public class MainFrame extends javax.swing.JFrame {
         jButtonStart = new javax.swing.JButton();
         jButtonStop = new javax.swing.JButton();
         jPanelInfo = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        jRadioButtonload = new javax.swing.JRadioButton();
+        jRadioButtoncheck = new javax.swing.JRadioButton();
+        jRadioButtonunload = new javax.swing.JRadioButton();
         jPanelLog = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaLog = new javax.swing.JTextArea();
@@ -157,21 +154,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabelSuccessOrFail.setFont(new java.awt.Font("等线", 0, 18)); // NOI18N
         jLabelSuccessOrFail.setText("无");
 
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("上料");
-        jRadioButton1.setEnabled(false);
-
-        jRadioButton2.setText("检测");
-        jRadioButton2.setEnabled(false);
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton3.setText("下料");
-        jRadioButton3.setEnabled(false);
-
         jLabel6.setText("当前运行速度：");
 
         jLabel7.setText("连续运行时长：");
@@ -187,32 +169,21 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(jPanelViewLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelViewLayout.createSequentialGroup()
-                        .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelRuntime)
-                            .addComponent(jLabelSpeed))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton3)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jRadioButton1)))
                     .addGroup(jPanelViewLayout.createSequentialGroup()
-                        .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelViewLayout.createSequentialGroup()
-                                .addGap(108, 108, 108)
-                                .addComponent(jLabel2))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelSuccessOrFail)
-                            .addComponent(jLabelId))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(108, 108, 108)
+                        .addComponent(jLabel2))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel6)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel7)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelSuccessOrFail)
+                    .addComponent(jLabelId)
+                    .addComponent(jLabelRuntime)
+                    .addComponent(jLabelSpeed))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         jPanelViewLayout.setVerticalGroup(
             jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,19 +198,15 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabelSuccessOrFail))
-                .addGap(26, 26, 26)
+                .addGap(55, 55, 55)
                 .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
                     .addComponent(jLabel6)
                     .addComponent(jLabelSpeed))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton2)
                     .addComponent(jLabel7)
                     .addComponent(jLabelRuntime))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton3)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
 
         jPanelControl.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -267,11 +234,11 @@ public class MainFrame extends javax.swing.JFrame {
         jPanelControlLayout.setHorizontalGroup(
             jPanelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelControlLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(jPanelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonStart)
                     .addComponent(jButtonStop))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanelControlLayout.setVerticalGroup(
             jPanelControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,51 +252,45 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanelInfo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel8.setText("2008年1月1日");
+        jRadioButtonload.setText("上料");
+        jRadioButtonload.setFocusable(false);
 
-        jLabel9.setText("00:00:00");
+        jRadioButtoncheck.setText("检测");
+        jRadioButtoncheck.setFocusable(false);
 
-        jLabel10.setText("星期一");
-
-        jLabel11.setText("1号工位");
+        jRadioButtonunload.setText("下料");
+        jRadioButtonunload.setFocusable(false);
 
         javax.swing.GroupLayout jPanelInfoLayout = new javax.swing.GroupLayout(jPanelInfo);
         jPanelInfo.setLayout(jPanelInfoLayout);
         jPanelInfoLayout.setHorizontalGroup(
             jPanelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelInfoLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(25, 25, 25)
                 .addGroup(jPanelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addGroup(jPanelInfoLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addGroup(jPanelInfoLayout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addGroup(jPanelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel10))))))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addComponent(jRadioButtonunload)
+                    .addComponent(jRadioButtoncheck)
+                    .addComponent(jRadioButtonload))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelInfoLayout.setVerticalGroup(
             jPanelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelInfoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11)
+                .addComponent(jRadioButtonload)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jRadioButtoncheck)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jRadioButtonunload)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelLog.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jTextAreaLog.setColumns(20);
-        jTextAreaLog.setFont(new java.awt.Font("Monospaced", 0, 10)); // NOI18N
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        jTextAreaLog.setEditable(false);
+        jTextAreaLog.setColumns(25);
+        jTextAreaLog.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         jTextAreaLog.setRows(5);
         jScrollPane1.setViewportView(jTextAreaLog);
 
@@ -341,12 +302,14 @@ public class MainFrame extends javax.swing.JFrame {
         );
         jPanelLogLayout.setVerticalGroup(
             jPanelLogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
         );
 
         jMenu1.setMnemonic('F');
         jMenu1.setText("文件");
+        jMenu1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
+        jMenuItem2.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         jMenuItem2.setText("初始化");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -355,6 +318,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
+        jMenuItem3.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         jMenuItem3.setText("退出");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -366,7 +330,9 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("查看");
+        jMenu2.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
+        jMenuItem4.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         jMenuItem4.setText("趋势图");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -378,7 +344,9 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("设置");
+        jMenu3.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
+        jMenuItem5.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         jMenuItem5.setText("通信模式");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -390,7 +358,9 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("帮助");
+        jMenu4.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
+        jMenuItem7.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         jMenuItem7.setText("帮助文档");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -399,6 +369,7 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem7);
 
+        jMenuItem8.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         jMenuItem8.setText("关于");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -415,17 +386,17 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanelLog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanelView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanelControl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -435,7 +406,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanelControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(jPanelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(jPanelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanelView, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelLog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -475,10 +446,6 @@ public class MainFrame extends javax.swing.JFrame {
             TimeCount.getTimeCount().beginCount();
         }
     }//GEN-LAST:event_jButtonStartActionPerformed
-
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -525,7 +492,7 @@ public class MainFrame extends javax.swing.JFrame {
         if(java.awt.Desktop.isDesktopSupported()){
             try{
                 //创建一个URI实例,注意不是URL
-                java.net.URI uri=java.net.URI.create("Documentation.html");
+                java.net.URI uri=java.net.URI.create("Documentation.htm");
                 //获取当前系统桌面扩展
                 java.awt.Desktop dp=java.awt.Desktop.getDesktop();
                 //判断系统桌面是否支持要执行的功能
@@ -637,6 +604,19 @@ public class MainFrame extends javax.swing.JFrame {
     public void switchMode(int n){
         connectMode = n;
     }
+    
+    public JRadioButton getButtonload(){
+        return jRadioButtonload;
+    }
+    
+     public JRadioButton getButtoncheck(){
+        return jRadioButtoncheck;
+    }   
+
+    public JRadioButton getButtonunload(){
+        return jRadioButtonunload;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -644,15 +624,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonStop;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelId;
     private javax.swing.JLabel jLabelRuntime;
     private javax.swing.JLabel jLabelSpeed;
@@ -672,9 +648,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelInfo;
     private javax.swing.JPanel jPanelLog;
     private javax.swing.JPanel jPanelView;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButtoncheck;
+    private javax.swing.JRadioButton jRadioButtonload;
+    private javax.swing.JRadioButton jRadioButtonunload;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaLog;
     // End of variables declaration//GEN-END:variables

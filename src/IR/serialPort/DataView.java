@@ -77,7 +77,7 @@ public class DataView extends javax.swing.JFrame {
 
                 case SerialPortEvent.RI: // 5 振铃指示
 
-                case SerialPortEvent.OUTPUT_BUFFER_EMPTY: // 2 输出缓冲区已清空
+                case SerialPortEvent.OUTPUT_BUFFER_EMPTY: // 2 输出缓冲区已清空d
                     break;
                 
                 case SerialPortEvent.DATA_AVAILABLE: // 1 串口存在可用数据
@@ -212,8 +212,10 @@ public class DataView extends javax.swing.JFrame {
 
     private void showSerialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showSerialButtonActionPerformed
         // TODO add your handling code here:
+        Log.logout("当前可用串口：");
         for(String tmp : commList){
             System.out.println(tmp);
+            Log.logout(tmp);
         }
     }//GEN-LAST:event_showSerialButtonActionPerformed
 

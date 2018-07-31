@@ -7,6 +7,7 @@ package IR.wifi;
 
 import IR.IdManager;
 import IR.Log;
+import IR.MainFrame;
 import IR.PanelData;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -50,6 +52,10 @@ public class SocketClient implements Runnable{
     }
         
     public void run() {
+        JRadioButton buttonload=MainFrame.getMainFrame().getButtonload();
+        JRadioButton buttoncheck=MainFrame.getMainFrame().getButtoncheck();
+        JRadioButton buttonunload=MainFrame.getMainFrame().getButtonunload();
+        
         try {
             // 要连接的服务端IP地址和端口
             // 与服务端建立连接
@@ -61,7 +67,7 @@ public class SocketClient implements Runnable{
 
             InputStream inputstream = socket.getInputStream();
             BufferedReader read=new BufferedReader(new InputStreamReader(inputstream,"UTF-8"));
-            System.out.println("开始接收" );
+            Log.logout("开始接收" );
             while(stopMe){
                 String line;
                 if((line=read.readLine())!=null){
@@ -82,7 +88,31 @@ public class SocketClient implements Runnable{
                         panelData.insertToDB();
                         panelData.display();
                     }
-                    System.out.println("get message from server:"+line);
+                    if(line.equals("begin_load")){
+                        if(!buttonload.isSelected())
+                            buttonload.doClick();
+                    }
+                    if(line.equals("end_load")){
+                        if(buttonload.isSelected())
+                            buttonload.doClick();
+                    }
+                    if(line.equals("begin_check")){
+                        if(!buttoncheck.isSelected())
+                            buttoncheck.doClick();
+                    }
+                    if(line.equals("end_check")){
+                        if(buttoncheck.isSelected())
+                            buttoncheck.doClick();
+                    }
+                    if(line.equals("begin_unload")){
+                        if(!buttonunload.isSelected())
+                            buttonunload.doClick();
+                    }
+                    if(line.equals("end_unload")){
+                        if(buttonunload.isSelected())
+                            buttonunload.doClick();
+                    }
+//                    System.out.println("get message from server:"+line);
                 }
             }
             socket.close();
